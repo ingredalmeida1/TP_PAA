@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 
-void inicializaVetorSequencia(int **vetorSequencia, int N, int M);
+void inicializaVetorSequencia(int **vetorFib, int **vetorSequencia, int N, int M);
 
-void sequenciaFibonacci(int N, int **vetorFib);
+int sequenciaFibonacci(int N);
 
-void preencheSequenciaFib(int **vetorFib);
+void preencheVetorFib(int **vetorFib, int N);
+
+void preencheVetorSequencia(int **vetorFib, int **vetorSequencia, int N, int M);
