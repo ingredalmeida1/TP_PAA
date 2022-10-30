@@ -1,13 +1,15 @@
 #include "arquivo.h"
-#include "matriz.h"
 
-void lerArquivo(int ***matriz)
+void lerArquivo(Posicao ***matriz)
 {
     FILE *arquivo;
     int N, M;
     int i = 0;
     int j = 0;
     char entrada[20];
+
+    int *vetorFib;
+    int *vetorSeq;
 
     printf("Entre com o nome do arquivo: ");
     scanf("%s", entrada);
@@ -22,6 +24,11 @@ void lerArquivo(int ***matriz)
 
     fscanf(arquivo, "%d %d ", &N, &M);
 
+    preencheVetorFib(&vetorFib, N, M);
+    inicializaVetorSequencia(&vetorSeq, N, M);
+    preencheVetorSequencia(&vetorFib, &vetorSeq, N, M);
+    // imprimeSequencia(N, M, &vetorSeq);
+
     inicializaMatriz(N, M, matriz);
 
     char *vetorLinha;
@@ -34,14 +41,15 @@ void lerArquivo(int ***matriz)
         char *valor = strtok(vetorLinha, " ");
         while (valor != NULL)
         {
-            int v = strtol(valor, &end, 10);    // função strtol que converte a string valor em um inteiro v
-            (*matriz)[i][j] = v;                // preenche com v a matriz
-            valor = strtok(NULL, " ");          // separa por espaço a linha lida do arquivo
+            int v = strtol(valor, &end, 10); // função strtol que converte a string valor em um inteiro v
+            (*matriz)[i][j].valor = v;             // preenche com v a matriz
+            valor = strtok(NULL, " ");       // separa por espaço a linha lida do arquivo
             j++;
         }
         i++;
         j = 0;
     }
 
-    imprimeMatriz(N, M, (*matriz));
+    // imprimeMatriz(N, M, (*matriz));
+    caminho(&vetorSeq, matriz, N, M);
 }

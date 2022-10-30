@@ -1,6 +1,6 @@
 #include "sequencia.h"
 
-int sequenciaFibonacci(int N)
+int sequenciaFibonacci(int N) // algoritmo comum para calcular a sequência de fibonacci
 {
 
     int fib1 = 1;
@@ -17,33 +17,28 @@ int sequenciaFibonacci(int N)
     return fib2;
 }
 
-void preencheVetorFib(int **vetorFib, int N)
+void preencheVetorFib(int **vetorFib, int N, int M) // função que preenche um vetor com a sequência de fibonacci
 {
-    (*vetorFib) = (int *)malloc(N * sizeof(int));
+    int i = 0;
+    int count = 0;
+
+    while (count < (N * M)) // este while me retorna qual o tamanho necessário do vetor de fibonacci
+    {                       // para que eu possa replica-lá na sequência da sequência, é a soma que
+        i++;                // aparece na especificação
+        count += i;
+    }
+
+    (*vetorFib) = (int *)malloc(i * sizeof(int));
     (*vetorFib)[0] = 1;
     (*vetorFib)[1] = 1;
 
-    for (int i = 2; i < N; i++)
+    for (int j = 2; j < i; j++)
     {
-        (*vetorFib)[i] = 0;
-    }
-
-    for (int i = 2; i < N; i++)
-    {
-        (*vetorFib)[i] = sequenciaFibonacci(i);
-    }
-
-    for (int i = 0; i < N; i++)
-    {
-        printf("%d ", (*vetorFib)[i]);
+        (*vetorFib)[j] = sequenciaFibonacci(j); // apenas preenche com os valores de fib
     }
 }
 
-// 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 FIB
-
-// 1 1 1
-
-void inicializaVetorSequencia(int **vetorFib, int **vetorSequencia, int N, int M)
+void inicializaVetorSequencia(int **vetorSequencia, int N, int M) // função apenas para inicializar o vetor da sequencia da sequenica
 {
     int tam = N * M;
     (*vetorSequencia) = (int *)malloc(tam * sizeof(int));
@@ -55,24 +50,37 @@ void inicializaVetorSequencia(int **vetorFib, int **vetorSequencia, int N, int M
 
 void preencheVetorSequencia(int **vetorFib, int **vetorSequencia, int N, int M)
 {
-    int tam = N * M;
-    int valor = 0;
-    int Nseq = 1;
+    int indice = 0;
+    int c = 0;
+    int count = 0;
 
-    while (1)
+    while (count < (N * M)) // a mesma explicação 
     {
-        for (int i = 0; i < Nseq; i++)
-        {
-            valor = (*vetorFib)[i];
-            for (int i = 0; i < tam; i++)
-            {
-                if ((*vetorSequencia)[i] == 0)
-                {
-                    (*vetorSequencia)[i] = valor;
-                }
-            }
+        c++;
+        count += c;
+    }
+
+    int i = 1, j = 0;  // i começa de 1 pq pegamos 1 primeiro. antes de 1 1 e 1 1 2
+
+    while(indice < N * M){    
+        if(j == i){ // isso é como se fosse um for, quando j = i, zeramos j e fazemos i++.
+            i+= 1; // antes era um for dentro do outro, mas estava ultrapassando o número de alocações do vetor de sequencias
+            j = 0;
         }
 
-        Nseq++;
+        (*vetorSequencia)[indice] = (*vetorFib)[j]; // o j me diz qual valor eu preciso pegar no vetor de fib
+        indice++; // posicao no vetor da sequencia que irá inserir
+        j++; // é aquele trem de 1, depois 1 1, depois 1 1 2
     }
+
+}
+
+void imprimeSequencia(int N, int M, int **vetorSequencia)
+{
+    int tam = N * M;
+    for (int i = 0; i < tam; i++)
+    {
+        printf("%d ", (*vetorSequencia)[i]);
+    }
+    printf("\n");
 }

@@ -2,6 +2,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-void inicializaMatriz(int N, int M, int ***matriz);
+typedef struct posicao{
+    int valor;
+    int marcado;
+}Posicao;
 
-void imprimeMatriz(int N, int M, int **matriz);
+void inicializaMatriz(int N, int M, Posicao ***matriz);
+
+void imprimeMatriz(int N, int M, Posicao **matriz);
+
+void caminho(int **vetorSequencia, Posicao ***matriz, int N, int M);
+
+void caminhoI(int **vetorSequencia, Posicao ***matriz, int N, int M, int linha, int coluna, int indiceSeq, int marcacao);
+
+void imprimeCaminho(Posicao ***matriz, int N, int M);
+
+void imprimeCaminhoI(Posicao ***matriz, int linha, int coluna, int N, int M, int indiceMarcado);
